@@ -1,5 +1,7 @@
 import { HouseIcon, LunchIcon, NeighborsIcon, WalkIcon } from "./Icons";
 
+const heroPhoto = `${import.meta.env.BASE_URL}bjorkhaga/web/IMG_1778.jpg`;
+
 const symbols = [
   { label: "Hemmakontor", Icon: HouseIcon },
   { label: "Promenad", Icon: WalkIcon },
@@ -10,6 +12,10 @@ const symbols = [
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-media" aria-hidden="true">
+        <img className="hero-photo" src={heroPhoto} alt="" />
+        <div className="hero-shade" />
+      </div>
       <div className="story">
         <ul className="symbols">
           {symbols.map(({ label, Icon }) => (
