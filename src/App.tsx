@@ -8,6 +8,7 @@ import { HowItWorks } from "./components/HowItWorks";
 import { Neighborhood } from "./components/Neighborhood";
 import { NextLunch } from "./components/NextLunch";
 import { NotifyNext } from "./components/NotifyNext";
+import { QuietFilm } from "./components/QuietFilm";
 import { SignupDialog } from "./components/SignupDialog";
 import { isSupabaseConfigured } from "./lib/supabase";
 import { nextLunch } from "./mock";
@@ -78,6 +79,8 @@ export default function App() {
       <main id="innehall">
         <div id="top" />
         <Hero />
+        <HowItWorks />
+        <Neighborhood />
         {lunch ? (
           <NextLunch
             lunch={lunch}
@@ -98,8 +101,7 @@ export default function App() {
             </article>
           </section>
         )}
-        <HowItWorks />
-        <Neighborhood />
+        <QuietFilm />
         <NotifyNext />
         <About />
       </main>
