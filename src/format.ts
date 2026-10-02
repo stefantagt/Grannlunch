@@ -13,10 +13,9 @@ export function formatLunchDate(isoDate: string): string {
   return formatted.charAt(0).toLocaleUpperCase("sv-SE") + formatted.slice(1);
 }
 
-export function attendanceLabel(count: number): string {
-  if (count === 0) return "Ingen är anmäld än";
-  if (count === 1) return "1 granne är redan anmäld";
-  return `${count} grannar är redan anmälda`;
+export function attendanceLabel(count: number): string | null {
+  if (count < 2) return null;
+  return `${count} grannar är anmälda`;
 }
 
 export function spotsLeft(lunch: Lunch, registeredCount: number): number | null {

@@ -41,6 +41,7 @@ function MessageDialog({
 }) {
   const titleId = useId();
   const introId = useId();
+  const cancelId = useId();
   const nameId = useId();
   const messageId = useId();
   const emailId = useId();
@@ -160,7 +161,7 @@ function MessageDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        aria-describedby={done ? undefined : introId}
+        aria-describedby={done ? undefined : `${introId} ${cancelId}`}
         tabIndex={-1}
       >
         <button className="dialog-close" type="button" onClick={onClose} aria-label="Stäng">
@@ -184,6 +185,9 @@ function MessageDialog({
             </h2>
             <p className="note-intro" id={introId}>
               Har du en fråga, ett tips på lunchställe eller något annat?
+            </p>
+            <p className="note-intro" id={cancelId}>
+              Behöver du avanmäla dig från en lunch går det bra att skriva här.
             </p>
             <form className="form" onSubmit={handleSubmit} noValidate>
               <div className="field">

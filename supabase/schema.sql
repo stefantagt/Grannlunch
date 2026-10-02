@@ -1,4 +1,6 @@
 -- Grannlunch. Kör i Supabase SQL editor.
+-- TODO inför nästa steg: messages (name, email nullable, message, created_at)
+-- med insert-only för anon, utan select. Prenumeranter ligger kvar i subscribers.
 -- Frontend ska bara använda anon-nyckeln.
 -- Insert från sidan är öppen med flit i den här versionen.
 -- Turnstile och en Edge Function kan läggas framför senare.
@@ -31,6 +33,13 @@ create table if not exists public.lunches (
     check (max_participants is null or max_participants > 0)
 );
 
+do $$
+begin
+  if not exists (select 1 from pg_type where typname = 'registration_status') then
+    create type public.registration_status as enum ('registered', 'cancelled');
+  end if;
+end $$;
+
 create table if not exists public.registrations (
   id uuid primary key default gen_random_uuid(),
   lunch_id uuid not null references public.lunches (id) on delete cascade,
@@ -38,11 +47,16 @@ create table if not exists public.registrations (
   email text not null,
   joining_walk boolean not null default true,
   future_updates boolean not null default false,
+  status public.registration_status not null default 'registered',
   created_at timestamptz not null default now(),
   constraint registrations_name_length check (char_length(btrim(name)) between 2 and 80),
   constraint registrations_email_format check (email ~* '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$')
 );
 
+-- En rad per e-post och lunch. En avbokning behåller raden och byter status.
+-- TODO inför Supabase: en person som redan är cancelled kan inte anmäla sig igen
+-- via formuläret, eftersom insert då krockar med den här nyckeln. Admin sätter
+-- status tillbaka till registered. Skapa ingen update-policy för anon.
 create unique index if not exists registrations_lunch_email_unique
   on public.registrations (lunch_id, lower(email));
 
@@ -60,8 +74,9 @@ create index if not exists lunches_published_date_idx
   on public.lunches (date)
   where status = 'published';
 
--- Bara lunch och antal. Inga namn eller e-postadresser.
+-- Bara lunch och antal aktiva anmälningar. Inga namn eller e-postadresser.
 -- security_invoker false gör att vyn kan räkna utan att lämna ut raderna.
+-- Avbokade rader (status = cancelled) räknas inte.
 create or replace view public.lunch_registration_counts
 with (security_invoker = false) as
 select
@@ -70,6 +85,7 @@ select
 from public.registrations r
 join public.lunches l on l.id = r.lunch_id
 where l.status = 'published'
+  and r.status = 'registered'
 group by r.lunch_id;
 
 alter table public.lunches enable row level security;
@@ -91,12 +107,22 @@ create policy "published lunches are readable"
   to anon, authenticated
   using (status = 'published');
 
+-- Anon får skapa en anmälan, inte ändra den. Status sätts till registered.
+-- Admin ändrar senare status till cancelled i Dashboard. Ingen update-policy för anon.
 drop policy if exists "anyone can register" on public.registrations;
 create policy "anyone can register"
   on public.registrations
   for insert
   to anon, authenticated
-  with check (true);
+  with check (
+    status = 'registered'
+    and exists (
+      select 1
+      from public.lunches
+      where lunches.id = lunch_id
+        and lunches.status = 'published'
+    )
+  );
 
 drop policy if exists "anyone can subscribe" on public.subscribers;
 create policy "anyone can subscribe"

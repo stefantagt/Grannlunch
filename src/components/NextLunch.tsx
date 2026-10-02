@@ -15,6 +15,7 @@ type NextLunchProps = {
 
 export function NextLunch({ lunch, registeredCount, onSignup }: NextLunchProps) {
   const spots = spotsLeft(lunch, registeredCount);
+  const attendance = attendanceLabel(registeredCount);
   const full = spots === 0;
 
   return (
@@ -40,7 +41,7 @@ export function NextLunch({ lunch, registeredCount, onSignup }: NextLunchProps) 
               className="place-name"
               href={lunch.restaurantUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               {placeLabel(lunch)}
             </a>
@@ -50,7 +51,7 @@ export function NextLunch({ lunch, registeredCount, onSignup }: NextLunchProps) 
           <p className="walk">{lunch.meetingPoint}</p>
         </div>
         <div className="stats">
-          <p>{attendanceLabel(registeredCount)}</p>
+          {attendance ? <p>{attendance}</p> : null}
           {spots != null ? <p>{spotsLabel(spots)}</p> : null}
         </div>
         <button

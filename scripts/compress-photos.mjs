@@ -5,9 +5,7 @@ import sharp from "sharp";
 const sourceDir = path.resolve("original/bjorkhaga");
 const outputDir = path.resolve("public/bjorkhaga/web");
 const files = [
-  "IMG_1769.JPEG",
   "IMG_1770.JPEG",
-  "IMG_1774.JPEG",
   "IMG_1775.JPEG",
   "IMG_1776.JPEG",
   "IMG_1777.JPEG",
