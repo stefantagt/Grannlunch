@@ -12,7 +12,7 @@ export const nextLunch: Lunch = {
   restaurantUrl: null,
   meetingPoint: "Gemensam promenad från området.",
   description: "En promenad och lunch tillsammans.",
-  offerText: "Grannlunchpris 125 kr",
+  offerText: "Vi siktar på ett bra pris",
   maxParticipants: 19,
   registeredCount: 7,
   status: "published",

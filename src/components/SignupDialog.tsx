@@ -29,7 +29,6 @@ function SignupForm({
   const closeRef = useRef<HTMLButtonElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [joiningWalk, setJoiningWalk] = useState(false);
   const [futureUpdates, setFutureUpdates] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
   const [saving, setSaving] = useState(false);
@@ -105,7 +104,7 @@ function SignupForm({
     const result = await onRegistered({
       name: nextName,
       email: nextEmail,
-      joiningWalk,
+      joiningWalk: true,
       futureUpdates,
     });
     setSaving(false);
@@ -156,7 +155,7 @@ function SignupForm({
                 <dd>{placeLabel(lunch)}</dd>
               </div>
             </dl>
-            {joiningWalk ? <p>Vi promenerar tillsammans från området.</p> : null}
+            <p>Vi promenerar tillsammans från området.</p>
             {futureUpdates ? (
               <p>Vi tipsar dig när nästa Grannlunch släpps.</p>
             ) : null}
@@ -211,18 +210,10 @@ function SignupForm({
               <label className="check">
                 <input
                   type="checkbox"
-                  checked={joiningWalk}
-                  onChange={(event) => setJoiningWalk(event.target.checked)}
-                />
-                <span>Jag följer med på den gemensamma promenaden</span>
-              </label>
-              <label className="check">
-                <input
-                  type="checkbox"
                   checked={futureUpdates}
                   onChange={(event) => setFutureUpdates(event.target.checked)}
                 />
-                <span>Tipsa mig gärna när nästa Grannlunch släpps</span>
+                <span>Tipsa mig nästa gång också</span>
               </label>
               <button className="button button-block" type="submit" disabled={saving}>
                 {saving ? "Anmäl…" : "Anmäl mig"}

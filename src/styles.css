@@ -654,14 +654,6 @@ a.place-name:hover {
   font-weight: 600;
 }
 
-.thanks {
-  margin-top: 1.15rem;
-  padding: 1rem 1.05rem;
-  border-radius: 18px;
-  background: var(--surface);
-  font-weight: 600;
-}
-
 .woods {
   padding: 0.5rem 0 3.5rem;
 }
@@ -852,18 +844,21 @@ a.place-name:hover {
   padding: 0 0 2.75rem;
 }
 
-.footer h2 {
-  font-size: 1.35rem;
+.footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1.15rem;
 }
 
-.footer p {
-  margin-top: 0.7rem;
+.footer-bar p {
+  margin: 0;
   color: var(--muted);
+  font-size: 0.92rem;
 }
 
-.footer-note {
-  margin-top: 1.5rem;
-  font-size: 0.92rem;
+.footer-bar .note-open {
+  margin-top: 0;
 }
 
 .dialog-backdrop {
@@ -968,7 +963,8 @@ a.place-name:hover {
 
 .dialog.note-dialog {
   width: min(100%, 28rem);
-  max-height: min(92dvh, 40rem);
+  max-height: calc(100dvh - 2rem);
+  padding: 1.4rem 1.2rem 2rem;
   border-radius: 28px;
   animation: note-in 0.2s ease;
 }
@@ -984,6 +980,10 @@ a.place-name:hover {
 
 .note-success .note-dismiss {
   padding: 0.55rem 0.85rem;
+}
+
+.note-success .button {
+  margin-top: 1.35rem;
 }
 
 @keyframes note-fade {
@@ -1071,6 +1071,10 @@ a.place-name:hover {
   .dialog {
     border-radius: 28px;
     padding: 1.7rem 1.6rem 1.5rem;
+  }
+
+  .dialog.note-dialog {
+    padding: 1.7rem 1.6rem 2.15rem;
   }
 }
 

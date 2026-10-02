@@ -36,7 +36,7 @@ create table if not exists public.registrations (
   lunch_id uuid not null references public.lunches (id) on delete cascade,
   name text not null,
   email text not null,
-  joining_walk boolean not null default false,
+  joining_walk boolean not null default true,
   future_updates boolean not null default false,
   created_at timestamptz not null default now(),
   constraint registrations_name_length check (char_length(btrim(name)) between 2 and 80),
@@ -128,7 +128,7 @@ insert into public.lunches (
   'Åkersberga Centrum',
   'Gemensam promenad från området.',
   'En promenad och lunch tillsammans.',
-  'Grannlunchpris 125 kr',
+  'Vi siktar på ett bra pris',
   19,
   'published'
 )
