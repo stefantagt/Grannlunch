@@ -604,6 +604,19 @@ a.place-name:hover {
   margin-top: 1.25rem;
 }
 
+.hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .inline-form .button {
   width: 100%;
 }

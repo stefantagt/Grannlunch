@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type RefObject } from "react";
 import { submitMessage, type MessageInput } from "../api";
-import { isValidEmail, normalizeEmail } from "../validate";
+import { isValidEmail, isValidName, normalizeEmail } from "../validate";
 
 type FieldErrors = {
   name?: string;
@@ -53,6 +53,7 @@ function MessageDialog({
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
+  const [fax, setFax] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
@@ -70,7 +71,7 @@ function MessageDialog({
 
       const focusable = [
         ...panelRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+          'button, [href], input:not([tabindex="-1"]), textarea, select, [tabindex]:not([tabindex="-1"])',
         ),
       ].filter((element) => !element.hasAttribute("disabled"));
 
@@ -112,8 +113,12 @@ function MessageDialog({
     const nextEmail = email.trim();
     const nextErrors: FieldErrors = {};
 
-    if (!nextName) nextErrors.name = "Skriv ditt namn.";
-    if (!nextMessage) nextErrors.message = "Skriv ett meddelande.";
+    if (!isValidName(nextName)) {
+      nextErrors.name = "Skriv ditt namn, mellan 2 och 80 tecken.";
+    }
+    if (!nextMessage || nextMessage.length > 2000) {
+      nextErrors.message = "Skriv ett meddelande.";
+    }
     if (nextEmail && !isValidEmail(normalizeEmail(nextEmail))) {
       nextErrors.email = "Skriv en giltig e-postadress.";
     }
@@ -123,6 +128,11 @@ function MessageDialog({
       if (nextErrors.name) nameRef.current?.focus();
       else if (nextErrors.message) messageRef.current?.focus();
       else emailRef.current?.focus();
+      return;
+    }
+
+    if (fax.trim()) {
+      setDone(true);
       return;
     }
 
@@ -190,6 +200,18 @@ function MessageDialog({
               Behöver du avanmäla dig från en lunch går det bra att skriva här.
             </p>
             <form className="form" onSubmit={handleSubmit} noValidate>
+              <div className="hp" aria-hidden="true">
+                <label htmlFor="note-fax">Fax</label>
+                <input
+                  id="note-fax"
+                  name="fax"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={fax}
+                  onChange={(event) => setFax(event.target.value)}
+                />
+              </div>
               <div className="field">
                 <label htmlFor={nameId}>Namn</label>
                 <input

@@ -30,6 +30,7 @@ function SignupForm({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [futureUpdates, setFutureUpdates] = useState(false);
+  const [fax, setFax] = useState("");
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
@@ -48,7 +49,7 @@ function SignupForm({
 
       const focusable = [
         ...panelRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          'button, [href], input:not([tabindex="-1"]), select, textarea, [tabindex]:not([tabindex="-1"])',
         ),
       ].filter((element) => !element.hasAttribute("disabled"));
 
@@ -99,6 +100,11 @@ function SignupForm({
 
     setErrors(nextErrors);
     if (nextErrors.name || nextErrors.email || saving) return;
+
+    if (fax.trim()) {
+      setDone(true);
+      return;
+    }
 
     setSaving(true);
     const result = await onRegistered({
@@ -168,6 +174,18 @@ function SignupForm({
             <h2 id={titleId}>Anmäl dig</h2>
             <p className="dialog-date">{formatLunchDate(lunch.date)}</p>
             <form className="form" onSubmit={handleSubmit} noValidate>
+              <div className="hp" aria-hidden="true">
+                <label htmlFor="signup-fax">Fax</label>
+                <input
+                  id="signup-fax"
+                  name="fax"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={fax}
+                  onChange={(event) => setFax(event.target.value)}
+                />
+              </div>
               <div className="field">
                 <label htmlFor="signup-name">Namn</label>
                 <input

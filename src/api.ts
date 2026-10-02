@@ -61,13 +61,18 @@ export async function registerForLunch(
   if (!isSupabaseConfigured()) return { ok: true };
 
   const email = normalizeEmail(input.email);
-  const { error } = await getSupabase().from("registrations").insert({
-    lunch_id: lunchId,
-    name: input.name.trim(),
-    email,
-    joining_walk: input.joiningWalk,
-    future_updates: input.futureUpdates,
-  });
+  const { error } = await getSupabase()
+    .from("registrations")
+    .insert(
+      {
+        lunch_id: lunchId,
+        name: input.name.trim(),
+        email,
+        joining_walk: input.joiningWalk,
+        future_updates: input.futureUpdates,
+      },
+      { defaultToNull: false },
+    );
 
   if (error) {
     if (isDuplicate(error.code)) return { ok: false, message: duplicateMessage };
@@ -89,7 +94,9 @@ export async function subscribeToNextLunch(email: string): Promise<SaveResult> {
 }
 
 async function saveSubscriber(email: string): Promise<boolean> {
-  const { error } = await getSupabase().from("subscribers").insert({ email });
+  const { error } = await getSupabase()
+    .from("subscribers")
+    .insert({ email }, { defaultToNull: false });
   if (!error || isDuplicate(error.code)) return true;
   return false;
 }
@@ -141,11 +148,23 @@ export type MessageInput = {
   message: string;
 };
 
-// Replace submitMessage with a Supabase insert into a messages table.
-// Columns: name, email (nullable), message. created_at is set by the database.
-// This mock must not send the message anywhere.
 export async function submitMessage(input: MessageInput): Promise<SaveResult> {
-  await new Promise((resolve) => window.setTimeout(resolve, 240));
-  void input;
+  if (!isSupabaseConfigured()) {
+    await new Promise((resolve) => window.setTimeout(resolve, 240));
+    return { ok: true };
+  }
+
+  const { error } = await getSupabase()
+    .from("messages")
+    .insert(
+      {
+        name: input.name.trim(),
+        email: input.email ? normalizeEmail(input.email) : null,
+        message: input.message.trim(),
+      },
+      { defaultToNull: false },
+    );
+
+  if (error) return { ok: false, message: saveFailedMessage };
   return { ok: true };
 }

@@ -5,6 +5,7 @@ import { isValidEmail, normalizeEmail } from "../validate";
 export function NotifyNext() {
   const submitRef = useRef<HTMLButtonElement>(null);
   const [email, setEmail] = useState("");
+  const [fax, setFax] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
@@ -20,6 +21,14 @@ export function NotifyNext() {
     }
 
     if (saving) return;
+
+    if (fax.trim()) {
+      setError("");
+      setEmail("");
+      setDone(true);
+      return;
+    }
+
     setSaving(true);
     const result = await subscribeToNextLunch(nextEmail);
     setSaving(false);
@@ -43,6 +52,18 @@ export function NotifyNext() {
           Lämna din e-post så berättar vi när nästa Grannlunch är på gång.
         </p>
         <form className="form inline-form" onSubmit={handleSubmit} noValidate>
+          <div className="hp" aria-hidden="true">
+            <label htmlFor="notify-fax">Fax</label>
+            <input
+              id="notify-fax"
+              name="fax"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={fax}
+              onChange={(event) => setFax(event.target.value)}
+            />
+          </div>
           <div className="field">
             <label htmlFor="notify-email">E-post</label>
             <input
