@@ -618,19 +618,34 @@ a.place-name:hover {
   font-size: 0.95rem;
 }
 
-.field input {
+.field input,
+.field textarea {
   width: 100%;
   min-height: 3.15rem;
   padding: 0.75rem 0.9rem;
   border: 1.5px solid rgba(28, 43, 36, 0.16);
   border-radius: 16px;
   background: white;
+  font: inherit;
 }
 
-.field input:focus {
+.field textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
   outline: 3px solid #e39a6a;
   outline-offset: 1px;
   border-color: transparent;
+}
+
+.field-hint,
+.field-optional {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
 }
 
 .field-error {
@@ -797,6 +812,42 @@ a.place-name:hover {
   font-size: 1.08rem;
 }
 
+.note {
+  padding: 0.25rem 0 2.75rem;
+}
+
+.note h2 {
+  font-size: clamp(1.7rem, 4vw, 2.15rem);
+}
+
+.note p {
+  margin-top: 0.35rem;
+  color: var(--muted);
+}
+
+.note-open,
+.note-dismiss {
+  margin-top: 0.85rem;
+  padding: 0.15rem 0;
+  border: 0;
+  background: none;
+  color: var(--terracotta);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.note-open:hover,
+.note-dismiss:hover {
+  color: var(--terracotta-deep);
+}
+
+.note-intro {
+  margin-top: 0.7rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
 .footer {
   padding: 0 0 2.75rem;
 }
@@ -907,6 +958,54 @@ a.place-name:hover {
   margin-top: 1.2rem;
 }
 
+.dialog-backdrop.note-backdrop {
+  align-items: center;
+  padding: 1rem;
+  background: rgba(28, 43, 36, 0.46);
+  backdrop-filter: blur(6px);
+  animation: note-fade 0.18s ease;
+}
+
+.dialog.note-dialog {
+  width: min(100%, 28rem);
+  max-height: min(92dvh, 40rem);
+  border-radius: 28px;
+  animation: note-in 0.2s ease;
+}
+
+.note-success {
+  text-align: center;
+  animation: note-in 0.2s ease;
+}
+
+.note-success h2 {
+  padding-right: 0;
+}
+
+.note-success .note-dismiss {
+  padding: 0.55rem 0.85rem;
+}
+
+@keyframes note-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes note-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 519px) {
   .header-inner {
     padding-top: 1.2rem;
@@ -964,7 +1063,7 @@ a.place-name:hover {
     margin-bottom: 0;
   }
 
-  .dialog-backdrop {
+  .dialog-backdrop:not(.note-backdrop) {
     align-items: center;
     padding: 1.5rem;
   }
@@ -993,7 +1092,10 @@ a.place-name:hover {
 
   .hero-photo,
   .breath-next img,
-  .breath-marks span {
+  .breath-marks span,
+  .dialog-backdrop.note-backdrop,
+  .dialog.note-dialog,
+  .note-success {
     animation: none;
     transition: none;
   }

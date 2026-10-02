@@ -134,3 +134,18 @@ function localDateIso(date: Date): string {
 function isDuplicate(code: string | undefined): boolean {
   return code === "23505";
 }
+
+export type MessageInput = {
+  name: string;
+  email: string | null;
+  message: string;
+};
+
+// Replace submitMessage with a Supabase insert into a messages table.
+// Columns: name, email (nullable), message. created_at is set by the database.
+// This mock must not send the message anywhere.
+export async function submitMessage(input: MessageInput): Promise<SaveResult> {
+  await new Promise((resolve) => window.setTimeout(resolve, 240));
+  void input;
+  return { ok: true };
+}

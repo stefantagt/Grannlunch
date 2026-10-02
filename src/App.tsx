@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { getNextLunch, registerForLunch, type SignupInput } from "./api";
 import { About } from "./components/About";
+import { ContactNote } from "./components/ContactNote";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
@@ -104,6 +105,7 @@ export default function App() {
         <QuietFilm />
         <NotifyNext />
         <About />
+        <ContactNote />
       </main>
       <Footer />
       {lunch ? (
