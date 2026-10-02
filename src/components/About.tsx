@@ -10,7 +10,7 @@ export function About() {
         </p>
         <p>
           Jag heter Stefan Tägt och bor med familjen i Björkhaga. Vi
-          har bott här sedan 2016, och jag jobbar själv flexibelt. Jag kom på
+          har bott här sedan 2016, och jag jobbar själv flexibelt till och från. Jag kom på
           idén och tänkte att det vore trevligt. Säkert finns det fler grannar
           som kan tänka sig en lunch tillsammans. Så varför inte ge det en chans!
         </p>

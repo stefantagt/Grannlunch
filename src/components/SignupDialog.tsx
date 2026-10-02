@@ -213,6 +213,7 @@ function SignupForm({
                   checked={futureUpdates}
                   onChange={(event) => setFutureUpdates(event.target.checked)}
                 />
+                <span className="check-mark" aria-hidden="true" />
                 <span>Tipsa mig nästa gång också</span>
               </label>
               <button className="button button-block" type="submit" disabled={saving}>

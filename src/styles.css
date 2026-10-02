@@ -910,18 +910,52 @@ a.place-name:hover {
 }
 
 .check {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.7rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .check input {
-  width: 1.15rem;
-  height: 1.15rem;
-  margin-top: 0.2rem;
-  accent-color: var(--terracotta);
+  position: absolute;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin: 0.12rem 0 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.check-mark {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.12rem;
+  border: 1.5px solid var(--sage);
+  border-radius: 0.4rem;
+  background: white;
   flex: none;
+}
+
+.check input:checked + .check-mark {
+  background: var(--sage);
+}
+
+.check input:checked + .check-mark::after {
+  content: "";
+  width: 0.32rem;
+  height: 0.58rem;
+  margin-top: -0.12rem;
+  border: solid var(--surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.check input:focus-visible + .check-mark {
+  outline: 3px solid #e39a6a;
+  outline-offset: 2px;
 }
 
 .success-details {
