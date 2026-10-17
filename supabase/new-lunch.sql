@@ -20,7 +20,7 @@ insert into public.lunches (
   status
 ) values (
   'Grannlunch',
-  '2026-10-14',
+  '2026-11-06',
   '11:45',
   '12:05',
   'Restaurang X (TBD)',

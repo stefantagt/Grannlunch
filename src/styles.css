@@ -204,6 +204,36 @@ a {
   color: #f0c4a2;
 }
 
+.header-news {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.32rem 0.75rem;
+  border: 1px solid rgba(246, 241, 231, 0.32);
+  border-radius: 999px;
+  background: rgba(22, 48, 36, 0.55);
+  color: #f6f1e7;
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  text-wrap: balance;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.header-news:hover {
+  background: rgba(22, 48, 36, 0.72);
+  border-color: rgba(246, 241, 231, 0.5);
+  color: #f6f1e7;
+}
+
+.header-news-short {
+  display: none;
+}
+
 section {
   scroll-margin-top: 5.5rem;
 }
@@ -435,6 +465,28 @@ h1 {
 
 .next {
   padding: 0.5rem 0 3.5rem;
+}
+
+.premiere {
+  margin-top: -1.75rem;
+  padding: 0 0 3rem;
+}
+
+.premiere-card {
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 22px;
+  background: var(--sage-soft);
+}
+
+.premiere h2 {
+  font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+  line-height: 1.15;
+  color: var(--sage);
+}
+
+.premiere p {
+  margin-top: 0.5rem;
+  color: var(--muted);
 }
 
 .event {
@@ -1053,6 +1105,49 @@ a.place-name:hover {
   }
 }
 
+@media (max-width: 900px) {
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "brand nav" "news news";
+    align-items: center;
+  }
+
+  .wordmark {
+    grid-area: brand;
+    justify-self: start;
+  }
+
+  .nav {
+    grid-area: nav;
+  }
+
+  .header-news {
+    grid-area: news;
+    justify-self: center;
+    margin-top: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .header-news-full {
+    display: none;
+  }
+
+  .header-news-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-news {
+    display: none;
+  }
+
+  .header-inner {
+    display: flex;
+  }
+}
+
 @media (max-width: 519px) {
   .header-inner {
     padding-top: 1.2rem;
@@ -1122,6 +1217,12 @@ a.place-name:hover {
 
   .dialog.note-dialog {
     padding: 1.7rem 1.6rem 2.15rem;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 768px) {
+  .hero {
+    padding-top: 9.25rem;
   }
 }
 

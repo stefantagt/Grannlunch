@@ -11,5 +11,5 @@ Thumbs.db
 *.local
 supabase/.temp
 
-# Kamerans original. Sidan använder bara kopiorna i public/bjorkhaga/web.
-original/
+# Original bilder finns i nedan mapp. Sidan använder bara kopiorna i public/bjorkhaga/web.
+GITHUB_Exkluderade_FilerBilder/

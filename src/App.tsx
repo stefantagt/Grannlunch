@@ -9,6 +9,7 @@ import { HowItWorks } from "./components/HowItWorks";
 import { Neighborhood } from "./components/Neighborhood";
 import { NextLunch } from "./components/NextLunch";
 import { NotifyNext } from "./components/NotifyNext";
+import { PremiereNote } from "./components/PremiereNote";
 import { QuietFilm } from "./components/QuietFilm";
 import { SignupDialog } from "./components/SignupDialog";
 import { isSupabaseConfigured } from "./lib/supabase";
@@ -76,7 +77,7 @@ export default function App() {
       <a className="skip" href="#innehall">
         Hoppa till innehållet
       </a>
-      <Header />
+      <Header lunchDate={lunch?.date} />
       <main id="innehall">
         <div id="top" />
         <Hero />
@@ -102,6 +103,7 @@ export default function App() {
             </article>
           </section>
         )}
+        <PremiereNote />
         <QuietFilm />
         <NotifyNext />
         <About />

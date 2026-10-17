@@ -13,6 +13,26 @@ export function formatLunchDate(isoDate: string): string {
   return formatted.charAt(0).toLocaleUpperCase("sv-SE") + formatted.slice(1);
 }
 
+export function formatLunchDay(isoDate: string): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return new Intl.DateTimeFormat("sv-SE", {
+    day: "numeric",
+    month: "long",
+  }).format(date);
+}
+
+export function formatLunchDayShort(isoDate: string): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return new Intl.DateTimeFormat("sv-SE", {
+    day: "numeric",
+    month: "short",
+  })
+    .format(date)
+    .replace(/\.$/, "");
+}
+
 export function attendanceLabel(count: number): string | null {
   if (count < 2) return null;
   return `${count} grannar är anmälda`;

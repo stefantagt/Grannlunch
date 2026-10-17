@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
+import { formatLunchDay, formatLunchDayShort } from "../format";
 
-export function Header() {
+type HeaderProps = {
+  lunchDate?: string | null;
+};
+
+export function Header({ lunchDate }: HeaderProps) {
+  const day = lunchDate ? formatLunchDay(lunchDate) : "6 november";
+  const shortDay = lunchDate ? formatLunchDayShort(lunchDate) : "6 nov";
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -27,6 +34,17 @@ export function Header() {
         <a className="wordmark" href="#top">
           <span className="wordmark-name">Grannlunch</span>
           <span className="wordmark-place">Björkhaga</span>
+        </a>
+        <a className="header-news" href="#nasta">
+          <span className="header-news-full">
+            <span aria-hidden="true">🎉 </span>
+            Premiären avklarad – nästa lunch {day}!{" "}
+            <span aria-hidden="true">→</span>
+          </span>
+          <span className="header-news-short">
+            <span aria-hidden="true">🎉 </span>
+            Premiären avklarad · {shortDay} nästa
+          </span>
         </a>
         <nav className="nav" aria-label="Sidans avsnitt">
           <a href="#nasta">Nästa lunch</a>
